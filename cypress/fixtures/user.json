@@ -1,0 +1,15 @@
+{
+  "firstName": "firstName",
+  "lastName": "lastName",
+  "email": "oiawasdqwedfiuahsbf@email.com",
+  "phoneNumber": "123456789",
+  "fax": "123456789",
+  "company": "companyName",
+  "address": "Fake str. 10",
+  "city": "Kyiv",
+  "region": "Kyiv",
+  "zipCode": "02090",
+  "country": "Ukraine",
+  "loginName": "aweraqwesddasdasdadsa",
+  "password": "pass123"
+}
