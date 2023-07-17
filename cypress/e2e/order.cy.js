@@ -44,19 +44,7 @@ it.only('Place order HW', () => {
   let productName = 'Acqua Di Gio Pour Homme'
   findProductByName(productName);
   
-  cy.get('.contentpanel [class="thumbnails grid row list-inline"]').contains(productName)
-  .closest('[class="col-md-3 col-sm-6 col-xs-12"]').find('[class="fa fa-cart-plus fa-fw"]').click()
-  cy.log('before else')
-  if(productName == 'Creme Precieuse Nuit 50ml'){
-  cy.get('.contentpanel [class="thumbnails grid row list-inline"]').contains(productName)
-  .closest('[class="col-md-3 col-sm-6 col-xs-12"]').find('[class="fa fa-shopping-cart fa-fw"]').click()
-  } else{
-    cy.get('.productpagecart .cart').click()
-  }
-  cy.log('after else')
-  cy.log('Verify order')
-  cy.get('[class="container-fluid cart-info product-list"]')
-  .should('contain', productName)
+  
 
   cy.log('Checkout')
   cy.get('[class="container-fluid cart-info product-list"] #cart_checkout1').click()

@@ -34,46 +34,19 @@ export function findProductByName(productName){
     
       cy.log('знайшли продукт')
     
-    //   return cy.get('запит діва з потрібним продуктом')
-
-
- 
-//  cy.get('.contentpanel [class="thumbnails grid row list-inline"]')
-//  .then(products =>{
-//     let length =  products.find(`[title="${productName}"]`).length
-//     // if(length == 0) {
-//     //     cy.get('.pagination').children().contains('>').click()
-//     // } else{
-//     //     //продукт є - щось зробити
-//     // }
-    
-//     for(length; length < 1; length = products.find(`[title="${productName}"]`).length){
-        
-//         cy.get('.pagination').children().contains('>').click()
-        
-//     }
-//     cy.log('**CODE DOSHEL**')
-//  })
-//  for(let length = 0; length < 1;){
-//     cy.wait(5000)
-//     cy.get('.contentpanel [class="thumbnails grid row list-inline"]')
-//         .then(products => {
-//             length = products.find(`[title="${productName}"]`).length
-            
-//             cy.get('.pagination').children().contains('>').click()
-//         })
-//         length = 1
-//     cy.log('**CODE DOSHEL**')
-//  }
-    // cy.get('.contentpanel [class="thumbnails grid row list-inline"]')
-    // .then(products => {
-    //     // let length =  products.find(`[title="${productName}"]`).length
-    //     // if(length == 0){
-    //     //     cy.get('.pagination').children().contains('>').click()
-    //     // } else{
-    //     //     cy.log('Nashel')
-    //     // }
-    // })
+      cy.get('.contentpanel [class="thumbnails grid row list-inline"]').contains(productName)
+      .closest('[class="col-md-3 col-sm-6 col-xs-12"]').find('[class="fa fa-cart-plus fa-fw"]').click()
+      
+      if(productName == 'Creme Precieuse Nuit 50ml'){
+      cy.get('.contentpanel [class="thumbnails grid row list-inline"]').contains(productName)
+      .closest('[class="col-md-3 col-sm-6 col-xs-12"]').find('[class="fa fa-shopping-cart fa-fw"]').click()
+      } else{
+        cy.get('.productpagecart .cart').click()
+      }
+      
+      cy.log('Verify order')
+      cy.get('[class="container-fluid cart-info product-list"]')
+      .should('contain', productName)
 
             
           
