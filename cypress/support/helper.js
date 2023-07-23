@@ -18,3 +18,36 @@ export function login2(user){
     cy.get('#loginFrm button').click();
 
 }
+
+export function findProductByName(productName){
+    const visitNextPageIfPossible = () => {
+        cy.get('.contentpanel [class="thumbnails grid row list-inline"]').then((products) => {
+          if (products.find(`[title="${productName}"]`).length > 0) {
+            return
+          }
+          cy.get('.pagination').children().contains('>').click()
+          visitNextPageIfPossible()
+        })
+      }
+    
+      visitNextPageIfPossible()
+    
+      cy.log('знайшли продукт')
+    
+      cy.get('.contentpanel [class="thumbnails grid row list-inline"]').contains(productName)
+      .closest('[class="col-md-3 col-sm-6 col-xs-12"]').find('[class="fa fa-cart-plus fa-fw"]').click()
+      
+      if(productName == 'Creme Precieuse Nuit 50ml'){
+      cy.get('.contentpanel [class="thumbnails grid row list-inline"]').contains(productName)
+      .closest('[class="col-md-3 col-sm-6 col-xs-12"]').find('[class="fa fa-shopping-cart fa-fw"]').click()
+      } else{
+        cy.get('.productpagecart .cart').click()
+      }
+      
+      cy.log('Verify order')
+      cy.get('[class="container-fluid cart-info product-list"]')
+      .should('contain', productName)
+
+            
+          
+}
