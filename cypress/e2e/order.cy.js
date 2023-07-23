@@ -1,68 +1,70 @@
 import { faker } from '@faker-js/faker';
 import user from '../fixtures/user.json';
-import {loginViaUI, findProductByName} from '../support/helper';
+import { loginViaUI, findProductByName } from '../support/helper';
+import HomePage from '../support/pages/HomePage';
+import CheckoutPage from '../support/pages/CheckoutPage';
 
 it('Place order', () => {
 
-    loginViaUI(user);
-    
-    cy.log('Add random product to cart from main page')
-    cy.visit('/');
-    cy.get('.productcart').first().click();
-    cy.get('.quick_basket').click();
+  loginViaUI(user);
 
-    cy.log('Open basket')
-    cy.get('#cart_checkout1').click();
+  cy.log('**Add random product to cart from main page**')
+  HomePage.visit()
+  HomePage.getProductCartButton().first().click();
+  HomePage.getQuickBasketButton().click();
 
-    cy.log('Verify checkout data')
-    cy.get('.table.confirm_shippment_options')
+  cy.log('**Open basket**')
+  CheckoutPage.getCheckoutButton().click()
+
+  cy.log('**Verify checkout data**')
+  CheckoutPage.getShippmentDetailsTable()
     .should('contain', user.firstName)
     .and('contain', user.lastName)
     .and('contain', user.phoneNumber);
 
-    cy.get('.table.confirm_payment_options')
+  CheckoutPage.getPaymentDetailsTable()
     .should('contain', user.firstName)
     .and('contain', user.lastName)
     .and('contain', user.phoneNumber);
 
-    cy.log('Confirm order')
-    cy.get('#checkout_btn').click();
+  cy.log('**Confirm order**')
+  CheckoutPage.getConfirmOrderButton().click();
 
-    cy.log('Thank you page displayed')
-    cy.get('.maintext').should('contain', 'Your Order Has Been Processed!');
+  cy.log('**Thank you page displayed**')
+  CheckoutPage.getTextThankyou().should('contain', 'Your Order Has Been Processed!');
 })
 
-it.only('Place order HW', () => {
+it('Place order HW', () => {
 
   loginViaUI(user);
-  
-  cy.log('Find and add product to cart from search page')
-  cy.visit('/');
 
-  cy.get('input#filter_keyword').type('i{enter}');
+  cy.log('**Find and add product to cart from search page**')
+  HomePage.visit()
+
+  HomePage.getSearchField().type('i{enter}');
 
   let productName = 'Acqua Di Gio Pour Homme'
   findProductByName(productName);
-  
-  
 
-  cy.log('Checkout')
-  cy.get('[class="container-fluid cart-info product-list"] #cart_checkout1').click()
-  
-  cy.log('Verify checkout data')
-  cy.get('.table.confirm_shippment_options')
-  .should('contain', user.firstName)
-  .and('contain', user.lastName)
-  .and('contain', user.phoneNumber);
 
-  cy.get('.table.confirm_payment_options')
-  .should('contain', user.firstName)
-  .and('contain', user.lastName)
-  .and('contain', user.phoneNumber);
 
-  cy.log('Confirm order')
-  cy.get('#checkout_btn').click();
+  cy.log('**Checkout**')
+  CheckoutPage.getCheckoutButton().click()
 
-  cy.log('Thank you page displayed')
-  cy.get('.maintext').should('contain', 'Your Order Has Been Processed!');
+  cy.log('**Verify checkout data**')
+  CheckoutPage.getShippmentDetailsTable()
+    .should('contain', user.firstName)
+    .and('contain', user.lastName)
+    .and('contain', user.phoneNumber);
+
+  CheckoutPage.getPaymentDetailsTable()
+    .should('contain', user.firstName)
+    .and('contain', user.lastName)
+    .and('contain', user.phoneNumber);
+
+  cy.log('**Confirm order**')
+  CheckoutPage.getConfirmOrderButton().click();
+
+  cy.log('**Thank you page displayed**')
+  CheckoutPage.getTextThankyou().should('contain', 'Your Order Has Been Processed!');
 })

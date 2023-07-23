@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import user from '../fixtures/user.json'
-import { loginViaUI, login2 } from '../support/helper'; 
+import { loginViaUI, login2 } from '../support/helper';
 
     it('Login user with valid credetials)', () => {    
         loginViaUI(user)
